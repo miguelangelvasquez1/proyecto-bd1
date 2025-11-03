@@ -86,7 +86,7 @@ public class SaleDetailsController {
         );
     }
 
-    public void setSale(@SuppressWarnings("exports") Purchase sale) {
+    public void setSale(Purchase sale) {
         this.sale = sale;
         loadSaleData();
     }

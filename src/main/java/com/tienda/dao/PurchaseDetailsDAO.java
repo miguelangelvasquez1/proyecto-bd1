@@ -11,13 +11,9 @@ import java.util.List;
 
 public class PurchaseDetailsDAO {
     private final DatabaseConnection dbConnection;
-    private final PurchaseDAO saleDAO;
-    private final ProductDAO productDAO;
 
     public PurchaseDetailsDAO() {
         this.dbConnection = DatabaseConnection.getInstance();
-        this.saleDAO = new PurchaseDAO();
-        this.productDAO = new ProductDAO();
     }
 
     public List<PurchaseDetails> findBySaleId(int saleId) {
@@ -140,18 +136,18 @@ public class PurchaseDetailsDAO {
     //     return details;
     // }
 
-    private PurchaseDetails mapResultSetToSaleDetails(ResultSet rs) throws SQLException {
-        PurchaseDetails details = new PurchaseDetails();
-        details.setId(rs.getInt("id"));
-        details.setAmount(rs.getInt("amount"));
-        details.setUnitPrice(rs.getDouble("unit_price"));
-        details.setIvaApplied(rs.getDouble("iva_applied"));
-        details.setSubtotal(rs.getDouble("subtotal"));
+    // private PurchaseDetails mapResultSetToSaleDetails(ResultSet rs) throws SQLException {
+    //     PurchaseDetails details = new PurchaseDetails();
+    //     details.setId(rs.getInt("id"));
+    //     details.setAmount(rs.getInt("amount"));
+    //     details.setUnitPrice(rs.getDouble("unit_price"));
+    //     details.setIvaApplied(rs.getDouble("iva_applied"));
+    //     details.setSubtotal(rs.getDouble("subtotal"));
 
-        // Cargar venta y producto
-        details.setSale(saleDAO.findById(rs.getInt("sale_id")));
-        details.setProduct(productDAO.findById(rs.getInt("product_id")));
+    //     // Cargar venta y producto
+    //     details.setSale(saleDAO.findById(rs.getInt("sale_id")));
+    //     details.setProduct(productDAO.findById(rs.getInt("product_id")));
 
-        return details;
-    }
+    //     return details;
+    // }
 }

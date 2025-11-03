@@ -12,4 +12,6 @@ module com.tienda {
     exports com.tienda;
     exports com.tienda.controller;
     exports com.tienda.controller.auxiliar;
+    exports com.tienda.model;
+    exports com.tienda.dao;
 }
