@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.auxiliar.TopController">
+         <MenuBar>
+            <Menu text="Entidades">
+               <MenuItem onAction="#openClients" text="Clientes" />
+               <MenuItem onAction="#openProducts" text="Productos" />
+               <MenuItem onAction="#openCategories" text="Categorías" />
+               <MenuItem onAction="#openUsers" text="Usuarios" />
+            </Menu>
+            <Menu text="Transacciones">
+               <MenuItem onAction="#openSales" text="Ventas" />
+               <MenuItem onAction="#openCredits" text="Créditos" />
+            </Menu>
+            <Menu text="Reportes">
+               <MenuItem onAction="#openIvaReport" text="Reporte IVA DIAN" />
+               <MenuItem onAction="#openClientReport" text="Clientes Morosos" />
+            </Menu>
+            <Menu text="Consultas">
+               <MenuItem onAction="#openSalesByUser" text="Ventas por Usuario" />
+               <MenuItem onAction="#openCreditAnalysis" text="Análisis de Créditos" />
+               <MenuItem onAction="#openClientPurchases" text="Compras por Cliente" />
+               <MenuItem onAction="#openMonthlyTrends" text="Tendencias Mensuales" />
+            </Menu>
+            <Menu text="Utilidades">
+               <MenuItem onAction="#openCalculator" text="Calculadora" />
+               <MenuItem onAction="#openCalendar" text="Calendario" />
+               <MenuItem onAction="#openUserManagement" text="Gestión de Usuarios" />
+               <MenuItem onAction="#openAccessLog" text="Bitácora de Acceso" />
+            </Menu>
+            <Menu text="Ayuda">
+               <MenuItem onAction="#openAbout" text="Acerca de" />
+               <MenuItem onAction="#openUserManual" text="Manual de Usuario" />
+               <MenuItem onAction="#logout" text="Cerrar Sesión" />
+            </Menu>
+         </MenuBar>
+      </VBox>

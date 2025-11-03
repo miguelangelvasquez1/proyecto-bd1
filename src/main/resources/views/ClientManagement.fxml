@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.collections.ObservableList?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.ClientController">
+   <top>
+      <VBox>
+      <fx:include source="top.fxml"/>
+      <VBox spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <Label text="Gestión de Clientes" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+         <HBox spacing="10.0">
+            <Button fx:id="btnNew" onAction="#newClient" text="Nuevo" />
+            <Button fx:id="btnSave" onAction="#saveClient" text="Guardar" />
+            <Button fx:id="btnEdit" onAction="#editClient" text="Editar" />
+            <Button fx:id="btnDelete" onAction="#deleteClient" text="Eliminar" />
+            <Button fx:id="btnRefresh" onAction="#refreshTable" text="Actualizar" />
+         </HBox>
+      </VBox>
+      </VBox>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.4" orientation="HORIZONTAL">
+         <AnchorPane>
+            <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <Label text="Información del Cliente" style="-fx-font-weight: bold;" />
+               
+               <GridPane hgap="10.0" vgap="10.0">
+                  <columnConstraints>
+                     <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                     <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+                  
+                  <Label text="Tipo Documento:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <ComboBox fx:id="cmbDocumentType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="CC"/>
+                              <String fx:value="NIT"/>
+                              <String fx:value="CE"/>
+                              <String fx:value="PAS"/>
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
+
+                  
+                  <Label text="Número Documento:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtDocumentNumber" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  
+                  <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  
+                  <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  
+                  <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtPhone" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  
+                  <Label text="Dirección:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                  <TextArea fx:id="txtAddress" prefRowCount="3" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               </GridPane>
+            </VBox>
+         </AnchorPane>
+         
+         <AnchorPane>
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               
+               <HBox spacing="10.0" alignment="CENTER_LEFT">
+                  <Label text="Lista de Clientes" style="-fx-font-weight: bold;" />
+                  <TextField fx:id="txtSearch" promptText="Buscar cliente..." />
+                  <Button onAction="#searchClient" text="Buscar" />
+               </HBox>
+               
+               <TableView fx:id="tableClients" VBox.vgrow="ALWAYS">
+                  <columns>
+                     <TableColumn fx:id="colDocumentType" prefWidth="80.0" text="Tipo Doc" />
+                     <TableColumn fx:id="colDocumentNumber" prefWidth="120.0" text="Documento" />
+                     <TableColumn fx:id="colName" prefWidth="200.0" text="Nombre" />
+                     <TableColumn fx:id="colEmail" prefWidth="180.0" text="Email" />
+                     <TableColumn fx:id="colPhone" prefWidth="120.0" text="Teléfono" />
+                  </columns>
+               </TableView>
+            </VBox>
+         </AnchorPane>
+      </SplitPane>
+   </center>
+   <bottom>
+      <Label fx:id="statusLabel" text="Listo" style="-fx-padding: 10px;" />
+   </bottom>
+</BorderPane>

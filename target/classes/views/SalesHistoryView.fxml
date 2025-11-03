@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.tienda.controller.SalesHistoryController" 
+            style="-fx-background-color: #f5f5f5;">
+    
+    <!-- Panel superior - Filtros -->
+    <top>
+        <VBox>
+
+        <fx:include source="top.fxml"/>
+
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20;">
+            
+            <Label text="Historial de Ventas" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+            
+            <!-- Filtros de búsqueda -->
+            <GridPane hgap="15" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                    <ColumnConstraints percentWidth="25"/>
+                </columnConstraints>
+                
+                <!-- Fecha Inicio -->
+                <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Fecha Inicio:" style="-fx-font-weight: bold;"/>
+                    <DatePicker fx:id="dpStartDate" promptText="Seleccione fecha" maxWidth="Infinity"/>
+                </VBox>
+                
+                <!-- Fecha Fin -->
+                <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Fecha Fin:" style="-fx-font-weight: bold;"/>
+                    <DatePicker fx:id="dpEndDate" promptText="Seleccione fecha" maxWidth="Infinity"/>
+                </VBox>
+                
+                <!-- Tipo de Venta -->
+                <VBox spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Label text="Tipo de Venta:" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="cbSaleType" promptText="Todos" maxWidth="Infinity">
+                        <items>
+                            <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                <String fx:value="TODOS"/>
+                                <String fx:value="CONTADO"/>
+                                <String fx:value="CREDITO"/>
+                            </javafx.collections.FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+                
+                <!-- Cliente -->
+                <VBox spacing="5" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                    <Label text="Cliente:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtClientFilter" promptText="Nombre del cliente"/>
+                </VBox>
+                
+                <!-- Usuario/Cajero -->
+                <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Cajero:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtUserFilter" promptText="Nombre del cajero"/>
+                </VBox>
+                
+                <!-- ID de Venta -->
+                <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="ID Venta:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtSaleIdFilter" promptText="ID"/>
+                </VBox>
+                
+                <!-- Monto Mínimo -->
+                <VBox spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Label text="Monto Mínimo:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtMinAmount" promptText="0"/>
+                </VBox>
+                
+                <!-- Monto Máximo -->
+                <VBox spacing="5" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <Label text="Monto Máximo:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtMaxAmount" promptText="9999999"/>
+                </VBox>
+            </GridPane>
+            
+            <!-- Botones de acción -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnSearch" text="Buscar" onAction="#handleSearch" 
+                       prefWidth="120" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Button fx:id="btnClearFilters" text="Limpiar Filtros" onAction="#handleClearFilters" 
+                       prefWidth="120" style="-fx-background-color: #757575; -fx-text-fill: white;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnExport" text="Exportar Excel" onAction="#handleExport" 
+                       prefWidth="120" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            </HBox>
+            
+            <!-- Estadísticas rápidas -->
+            <HBox spacing="20" style="-fx-padding: 10 0 0 0;">
+                <VBox spacing="5" style="-fx-background-color: #E3F2FD; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Total Ventas" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblTotalSales" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1976D2;"/>
+                </VBox>
+                
+                <VBox spacing="5" style="-fx-background-color: #E8F5E9; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Monto Total" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblTotalAmount" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #388E3C;"/>
+                </VBox>
+                
+                <VBox spacing="5" style="-fx-background-color: #FFF3E0; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Contado" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblCashSales" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #F57C00;"/>
+                </VBox>
+                
+                <VBox spacing="5" style="-fx-background-color: #FCE4EC; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Crédito" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblCreditSales" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #C2185B;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+        </VBox>
+    </top>
+    
+    <!-- Tabla de ventas -->
+    <center>
+        <VBox style="-fx-padding: 20;">
+            <TableView fx:id="tblSales" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colDate" text="Fecha" prefWidth="100"/>
+                    <TableColumn fx:id="colClient" text="Cliente" prefWidth="150"/>
+                    <TableColumn fx:id="colUser" text="Cajero" prefWidth="120"/>
+                    <TableColumn fx:id="colSaleType" text="Tipo" prefWidth="80"/>
+                    <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="100"/>
+                    <TableColumn fx:id="colIva" text="IVA" prefWidth="80"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="100"/>
+                    <TableColumn fx:id="colProducts" text="Productos" prefWidth="80"/>
+                    <TableColumn fx:id="colActions" text="Acciones" prefWidth="150"/>
+                </columns>
+                <placeholder>
+                    <Label text="No hay ventas para mostrar con los filtros seleccionados"/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <!-- Panel inferior - Paginación -->
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 15;">
+            <Button fx:id="btnFirstPage" text="Primera" onAction="#handleFirstPage"/>
+            <Button fx:id="btnPrevPage" text="Anterior" onAction="#handlePrevPage"/>
+            <Label fx:id="lblPageInfo" text="Página 1 de 1"/>
+            <Button fx:id="btnNextPage" text="Siguiente" onAction="#handleNextPage"/>
+            <Button fx:id="btnLastPage" text="Última" onAction="#handleLastPage"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Registros por página:"/>
+            <ComboBox fx:id="cbPageSize" value="20" prefWidth="80">
+                <items>
+                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                        <String fx:value="10"/>
+                        <String fx:value="20"/>
+                        <String fx:value="50"/>
+                        <String fx:value="100"/>
+                    </javafx.collections.FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

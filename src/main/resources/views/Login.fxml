@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.LoginController">
+   <children>
+      <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);" maxWidth="400.0" prefWidth="400.0">
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
+               <children>
+                  <Label text="Iniciar Sesión" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  
+                  <VBox spacing="15.0">
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Email:" />
+                              <TextField fx:id="emailField" promptText="Ingresa tu email" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                           </children>
+                        </VBox>
+                        
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Contraseña:" />
+                              <PasswordField fx:id="passwordField" promptText="Ingresa tu contraseña" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                           </children>
+                        </VBox>
+                        
+                        <Label fx:id="errorLabel" style="-fx-text-fill: red;" visible="false" />
+                        
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefWidth="340.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" text="Iniciar Sesión">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Label text="¿No tienes cuenta?" />
+                              <Hyperlink fx:id="registerLink" onAction="#showRegister" text="Regístrate aquí" />
+                              <Hyperlink fx:id="mainLink" onAction="#showMain" text="Borrar: Ir al main" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+   <style>
+      -fx-background-color: linear-gradient(to bottom, #f0f2f5, #e9ecef);
+   </style>
+</AnchorPane>

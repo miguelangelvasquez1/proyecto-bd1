@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.tienda.controller.CreditDetailsController" 
+      spacing="20" style="-fx-background-color: #f5f5f5;" prefWidth="750" prefHeight="650">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Encabezado -->
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8;">
+        <VBox spacing="3" HBox.hgrow="ALWAYS">
+            <Label fx:id="lblCreditTitle" text="Crédito #1234" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblCreditDate" text="Fecha: 01/01/2025" style="-fx-text-fill: #666;"/>
+        </VBox>
+        <Label fx:id="lblCreditState" text="VIGENTE" 
+               style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 5 15; -fx-background-radius: 15; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Información del crédito -->
+    <HBox spacing="15">
+        <!-- Columna izquierda -->
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+            <Label text="Información del Crédito" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            
+            <GridPane hgap="15" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="140" prefWidth="140"/>
+                    <ColumnConstraints minWidth="150" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Monto Financiado:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblAmountFinanced" text="0" GridPane.columnIndex="1" GridPane.rowIndex="0" 
+                       style="-fx-font-size: 16px; -fx-text-fill: #2196F3; -fx-font-weight: bold;"/>
+
+                <Label text="Cuota Inicial:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblInitialQuota" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Plazo:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblMonths" text="0 meses" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Tasa de Interés:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblInterestRate" text="0.0%" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Valor Cuota:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblQuotaValue" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" 
+                       style="-fx-font-size: 16px; -fx-text-fill: #4CAF50; -fx-font-weight: bold;"/>
+            </GridPane>
+        </VBox>
+
+        <!-- Columna derecha - Resumen -->
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;" prefWidth="250">
+            <Label text="Resumen de Pagos" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            
+            <VBox spacing="8">
+                <VBox spacing="3" style="-fx-background-color: #E8F5E9; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Cuotas Pagadas" style="-fx-font-size: 11px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblPaidQuotas" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #388E3C;"/>
+                </VBox>
+                
+                <VBox spacing="3" style="-fx-background-color: #FFF3E0; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Cuotas Pendientes" style="-fx-font-size: 11px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblPendingQuotas" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #F57C00;"/>
+                </VBox>
+                
+                <VBox spacing="3" style="-fx-background-color: #E3F2FD; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Total Pagado" style="-fx-font-size: 11px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblTotalPaid" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1976D2;"/>
+                </VBox>
+                
+                <VBox spacing="3" style="-fx-background-color: #FCE4EC; -fx-padding: 10; -fx-background-radius: 5;">
+                    <Label text="Saldo Pendiente" style="-fx-font-size: 11px; -fx-text-fill: #666;"/>
+                    <Label fx:id="lblBalance" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #C2185B;"/>
+                </VBox>
+            </VBox>
+        </VBox>
+    </HBox>
+
+    <!-- Tabla de cuotas -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+        <Label text="Detalle de Cuotas" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <TableView fx:id="tblQuotas" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colQuotaNumber" text="Cuota" prefWidth="60"/>
+                <TableColumn fx:id="colExpirationDate" text="Fecha Venc." prefWidth="100"/>
+                <TableColumn fx:id="colQuotaValue" text="Valor" prefWidth="100"/>
+                <TableColumn fx:id="colPayedValue" text="Pagado" prefWidth="100"/>
+                <TableColumn fx:id="colPayedDate" text="Fecha Pago" prefWidth="100"/>
+                <TableColumn fx:id="colQuotaState" text="Estado" prefWidth="100"/>
+                <TableColumn fx:id="colActions" text="Acciones" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Botones -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="btnRegisterPayment" text="Registrar Pago" onAction="#handleRegisterPayment" 
+               prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Cerrar" onAction="#handleClose" prefWidth="120" 
+               style="-fx-background-color: #757575; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>

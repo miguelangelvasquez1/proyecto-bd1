@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.tienda.controller.ProductFormController" 
+      spacing="20" style="-fx-background-color: #f5f5f5;" prefWidth="600" prefHeight="550">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8;">
+        <Label fx:id="lblTitle" text="Nuevo Producto" 
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+    </HBox>
+
+    <!-- Formulario -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+            
+            <!-- Código -->
+            <VBox spacing="5">
+                <Label text="Código del Producto *" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtCode" promptText="Ej: TEC001"/>
+                <Label fx:id="lblCodeError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+            </VBox>
+
+            <!-- Nombre -->
+            <VBox spacing="5">
+                <Label text="Nombre *" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtName" promptText="Ej: Laptop HP Pavilion"/>
+                <Label fx:id="lblNameError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+            </VBox>
+
+            <!-- Descripción -->
+            <VBox spacing="5">
+                <Label text="Descripción" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="txtDescription" promptText="Descripción detallada del producto" 
+                         prefRowCount="3" wrapText="true"/>
+            </VBox>
+
+            <!-- Categoría -->
+            <VBox spacing="5">
+                <Label text="Categoría *" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="cbCategory" promptText="Seleccione una categoría" maxWidth="Infinity"/>
+                <Label fx:id="lblCategoryError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+            </VBox>
+
+            <!-- Valores y Stock en Grid -->
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                    <ColumnConstraints percentWidth="33"/>
+                </columnConstraints>
+
+                <!-- Stock -->
+                <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Stock Inicial *" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtStock" promptText="0"/>
+                    <Label fx:id="lblStockError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+                </VBox>
+
+                <!-- Valor Adquisición -->
+                <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Valor Adquisición *" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtAcquisition" promptText="0"/>
+                    <Label fx:id="lblAcquisitionError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+                </VBox>
+
+                <!-- Valor Venta -->
+                <VBox spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Label text="Valor Venta *" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtSale" promptText="0"/>
+                    <Label fx:id="lblSaleError" text="" style="-fx-text-fill: #F44336; -fx-font-size: 11px;" visible="false"/>
+                </VBox>
+            </GridPane>
+
+            <!-- Información calculada -->
+            <VBox spacing="8" style="-fx-background-color: #E3F2FD; -fx-padding: 15; -fx-background-radius: 5;">
+                <Label text="Información Calculada" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                
+                <HBox spacing="10">
+                    <Label text="IVA Aplicable:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="lblIvaInfo" text="0.0%"/>
+                </HBox>
+                
+                <HBox spacing="10">
+                    <Label text="Margen de Utilidad:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="lblUtilityInfo" text="0.0%"/>
+                </HBox>
+                
+                <HBox spacing="10">
+                    <Label text="Utilidad Esperada:" style="-fx-font-weight: bold;"/>
+                    <Label fx:id="lblProfitInfo" text="0" style="-fx-text-fill: #4CAF50; -fx-font-weight: bold;"/>
+                </HBox>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Nota -->
+            <Label text="* Campos obligatorios" style="-fx-font-size: 11px; -fx-text-fill: #666; -fx-font-style: italic;"/>
+
+        </VBox>
+    </ScrollPane>
+
+    <!-- Botones -->
+    <HBox spacing="15" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8;">
+        <Button fx:id="btnSave" text="Guardar" onAction="#handleSave" 
+               prefWidth="150" prefHeight="35"
+               style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        
+        <Button text="Cancelar" onAction="#handleCancel" 
+               prefWidth="150" prefHeight="35"
+               style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-size: 14px;"/>
+    </HBox>
+
+</VBox>

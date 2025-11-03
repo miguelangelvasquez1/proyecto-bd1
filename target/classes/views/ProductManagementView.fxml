@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.tienda.controller.ProductManagementController" 
+            style="-fx-background-color: #f5f5f5;">
+    
+    <!-- Panel superior - Filtros y búsqueda -->
+    <top>
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20;">
+            <Label text="Gestión de Productos" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+            
+            <!-- Filtros -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Buscar:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtSearch" promptText="Código, nombre o descripción" 
+                              onKeyReleased="#handleSearch" HBox.hgrow="ALWAYS"/>
+                </VBox>
+                
+                <VBox spacing="5" prefWidth="200">
+                    <Label text="Categoría:" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="cbCategoryFilter" promptText="Todas las categorías" 
+                             maxWidth="Infinity" onAction="#handleSearch"/>
+                </VBox>
+                
+                <VBox spacing="5" prefWidth="150">
+                    <Label text="Stock:" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="cbStockFilter" promptText="Todos" maxWidth="Infinity" onAction="#handleSearch">
+                        <items>
+                            <javafx.collections.FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Todos"/>
+                                <String fx:value="Con Stock"/>
+                                <String fx:value="Sin Stock"/>
+                                <String fx:value="Stock Bajo"/>
+                            </javafx.collections.FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+                
+                <VBox spacing="5" alignment="BOTTOM_LEFT">
+                    <Label text=" "/>
+                    <Button fx:id="btnClearFilters" text="Limpiar" onAction="#handleClearFilters" 
+                           prefWidth="100" style="-fx-background-color: #757575; -fx-text-fill: white;"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Botones de acción -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button fx:id="btnNew" text="+ Nuevo Producto" onAction="#handleNew" 
+                       prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button fx:id="btnExport" text="Exportar Excel" onAction="#handleExport" 
+                       prefWidth="120" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblTotalProducts" text="Total: 0 productos" 
+                      style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #666;"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- Tabla de productos -->
+    <center>
+        <VBox style="-fx-padding: 20;">
+            <TableView fx:id="tblProducts" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colCode" text="Código" prefWidth="100"/>
+                    <TableColumn fx:id="colName" text="Nombre" prefWidth="200"/>
+                    <TableColumn fx:id="colDescription" text="Descripción" prefWidth="250"/>
+                    <TableColumn fx:id="colCategory" text="Categoría" prefWidth="120"/>
+                    <TableColumn fx:id="colStock" text="Stock" prefWidth="80"/>
+                    <TableColumn fx:id="colAcquisition" text="V. Adquisición" prefWidth="120"/>
+                    <TableColumn fx:id="colSale" text="V. Venta" prefWidth="120"/>
+                    <TableColumn fx:id="colActions" text="Acciones" prefWidth="180"/>
+                </columns>
+                <placeholder>
+                    <Label text="No hay productos para mostrar"/>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <!-- Panel inferior - Paginación -->
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 15;">
+            <Button fx:id="btnFirstPage" text="Primera" onAction="#handleFirstPage"/>
+            <Button fx:id="btnPrevPage" text="Anterior" onAction="#handlePrevPage"/>
+            <Label fx:id="lblPageInfo" text="Página 1 de 1"/>
+            <Button fx:id="btnNextPage" text="Siguiente" onAction="#handleNextPage"/>
+            <Button fx:id="btnLastPage" text="Última" onAction="#handleLastPage"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Por página:"/>
+            <ComboBox fx:id="cbPageSize" value="20" prefWidth="80">
+                <items>
+                    <javafx.collections.FXCollections fx:factory="observableArrayList">
+                        <String fx:value="10"/>
+                        <String fx:value="20"/>
+                        <String fx:value="50"/>
+                        <String fx:value="100"/>
+                    </javafx.collections.FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

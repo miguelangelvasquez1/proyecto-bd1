@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.tienda.controller.SaleDetailsController" 
+      spacing="20" style="-fx-background-color: #f5f5f5;" prefWidth="700" prefHeight="600">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Encabezado -->
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8;">
+        <VBox spacing="3" HBox.hgrow="ALWAYS">
+            <Label fx:id="lblSaleTitle" text="Venta #1234" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblSaleDate" text="Fecha: 01/01/2025" style="-fx-text-fill: #666;"/>
+        </VBox>
+        <Label fx:id="lblSaleType" text="CONTADO" 
+               style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 5 15; -fx-background-radius: 15; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Información general -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+        <Label text="Información General" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <GridPane hgap="15" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints minWidth="200" hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblClient" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="Cajero:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblCashier" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Subtotal:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblSubtotal" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="IVA:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblIva" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Total:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblTotal" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4" 
+                   style="-fx-font-size: 18px; -fx-text-fill: #4CAF50; -fx-font-weight: bold;"/>
+        </GridPane>
+    </VBox>
+
+    <!-- Productos -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+        <Label text="Productos" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <TableView fx:id="tblProducts" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colProductCode" text="Código" prefWidth="100"/>
+                <TableColumn fx:id="colProductName" text="Producto" prefWidth="200"/>
+                <TableColumn fx:id="colQuantity" text="Cantidad" prefWidth="80"/>
+                <TableColumn fx:id="colUnitPrice" text="Precio Unit." prefWidth="100"/>
+                <TableColumn fx:id="colIvaApplied" text="IVA" prefWidth="80"/>
+                <TableColumn fx:id="colSubtotalProduct" text="Subtotal" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- Botón cerrar -->
+    <HBox alignment="CENTER">
+        <Button text="Cerrar" onAction="#handleClose" prefWidth="120" 
+               style="-fx-background-color: #757575; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>

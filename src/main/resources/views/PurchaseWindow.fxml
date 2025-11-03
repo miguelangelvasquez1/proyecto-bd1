@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.tuempresa.controller.PurchaseViewController" 
+      spacing="20" style="-fx-background-color: #f5f5f5;">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título -->
+    <Label text="Compra de Producto" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+    
+    <!-- Búsqueda de producto -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15;">
+        <Label text="Buscar Producto" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="txtProductSearch" promptText="Ingrese código o ID del producto" 
+                      HBox.hgrow="ALWAYS" prefWidth="300"/>
+            <Button fx:id="btnSearch" text="Buscar" onAction="#handleSearchProduct" 
+                   style="-fx-background-color: #2196F3; -fx-text-fill: white;" prefWidth="100"/>
+        </HBox>
+    </VBox>
+
+    <!-- Información del producto -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 20;">
+        <Label text="Información del Producto" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <GridPane hgap="15" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints minWidth="120" prefWidth="120"/>
+                <ColumnConstraints minWidth="250" prefWidth="250" hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Código:" GridPane.columnIndex="0" GridPane.rowIndex="0" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductCode" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductName" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="2" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductDescription" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" 
+                   wrapText="true"/>
+
+            <Label text="Categoría:" GridPane.columnIndex="0" GridPane.rowIndex="3" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductCategory" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Stock Disponible:" GridPane.columnIndex="0" GridPane.rowIndex="4" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductStock" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label text="Precio Unitario:" GridPane.columnIndex="0" GridPane.rowIndex="5" 
+                   style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblProductPrice" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" 
+                   style="-fx-font-size: 18px; -fx-text-fill: #4CAF50; -fx-font-weight: bold;"/>
+        </GridPane>
+    </VBox>
+
+    <!-- Cantidad a comprar -->
+    <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15;">
+        <Label text="Cantidad" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Spinner fx:id="spinQuantity" prefWidth="120" editable="true"/>
+            <Label fx:id="lblTotalPrice" text="Total: $0.00" 
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Botones de acción -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="btnPurchase" text="Realizar Compra" onAction="#handlePurchase" 
+               prefWidth="150" prefHeight="40" disable="true"
+               style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        
+        <Button fx:id="btnClear" text="Limpiar" onAction="#handleClear" 
+               prefWidth="150" prefHeight="40"
+               style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-size: 14px;"/>
+    </HBox>
+
+</VBox>
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.PurchaseController">
+   <top>
+      <VBox spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <Label text="Registro de Compras de Productos" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+         <HBox spacing="10.0">
+            <Button fx:id="btnNewPurchase" onAction="#newPurchase" text="Nueva Compra" />
+            <Button fx:id="btnSavePurchase" onAction="#savePurchase" text="Procesar Compra" />
+            <Button fx:id="btnPrintPurchase" onAction="#printPurchase" text="Imprimir" />
+            <Button fx:id="btnClear" onAction="#clearPurchase" text="Limpiar" />
+            <Button fx:id="btnSearchPurchase" onAction="#searchPurchase" text="Buscar Compra" />
+         </HBox>
+      </VBox>
+   </top>
+   
+   <center>
+      <VBox spacing="15.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         
+         <!-- Información del Proveedor -->
+         <VBox spacing="8.0">
+            <Label text="Información del Proveedor" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+            <GridPane hgap="10.0" vgap="8.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               
+               <Label text="Proveedor:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <TextField fx:id="txtSupplier" promptText="Nombre del proveedor" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+               
+               <Label text="Documento:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+               <TextField fx:id="txtSupplierDocument" promptText="NIT o documento" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+               
+               <Label text="Teléfono:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField fx:id="txtSupplierPhone" promptText="Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               
+               <Label text="Email:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField fx:id="txtSupplierEmail" promptText="Email" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            </GridPane>
+         </VBox>
+         
+         <!-- Información de la Compra -->
+         <HBox spacing="15.0" alignment="CENTER_LEFT">
+            <Label text="Fecha Compra:" />
+            <DatePicker fx:id="datePurchase" />
+            
+            <Label text="Forma de Pago:" />
+            <ComboBox fx:id="cmbPaymentMethod" prefWidth="120.0">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="CONTADO" />
+                     <String fx:value="CREDITO" />
+                  </FXCollections>
+               </items>
+            </ComboBox>
+            
+            <Label text="N° Compra:" />
+            <TextField fx:id="txtPurchaseNumber" prefWidth="120.0" editable="false" />
+         </HBox>
+         
+         <!-- Productos a Comprar -->
+         <VBox spacing="10.0">
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+               <Label text="Agregar Productos" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+               <Button fx:id="btnAddNewProduct" onAction="#addNewProduct" text="+ Nuevo Producto" />
+            </HBox>
+            
+            <GridPane hgap="10.0" vgap="8.0" style="-fx-border-color: lightgray; -fx-padding: 10px;">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+               </columnConstraints>
+               
+               <Label text="Producto:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                  <TextField fx:id="txtProductSearch" promptText="Buscar por código o nombre..." HBox.hgrow="ALWAYS" />
+                  <Button onAction="#searchProduct" text="Buscar" />
+               </HBox>
+               
+               <Label text="Cantidad:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+               <Spinner fx:id="spnQuantity" prefWidth="80.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+               
+               <Label text="Costo Unit.:" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+               <TextField fx:id="txtUnitCost" promptText="0.00" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+               
+               <Label fx:id="lblProductName" text="Producto no seleccionado" style="-fx-text-fill: blue;" 
+                      GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+               
+               <Button fx:id="btnAddProduct" onAction="#addProductToPurchase" text="Agregar" disable="true" 
+                       GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            </GridPane>
+            
+            <TableView fx:id="tableProducts" prefHeight="250.0">
+               <columns>
+                  <TableColumn fx:id="colProductCode" prefWidth="100.0" text="Código" />
+                  <TableColumn fx:id="colProductName" prefWidth="200.0" text="Producto" />
+                  <TableColumn fx:id="colCategory" prefWidth="100.0" text="Categoría" />
+                  <TableColumn fx:id="colQuantity" prefWidth="80.0" text="Cant." />
+                  <TableColumn fx:id="colUnitCost" prefWidth="100.0" text="Costo Unit." />
+                  <TableColumn fx:id="colSubtotal" prefWidth="100.0" text="Subtotal" />
+                  <TableColumn fx:id="colIva" prefWidth="80.0" text="IVA" />
+                  <TableColumn fx:id="colTotal" prefWidth="100.0" text="Total" />
+                  <TableColumn fx:id="colActions" prefWidth="80.0" text="Acciones" />
+               </columns>
+            </TableView>
+         </VBox>
+         
+         <!-- Totales y Observaciones -->
+         <HBox spacing="20.0">
+            <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+               <Label text="Observaciones:" />
+               <TextArea fx:id="txtObservations" prefRowCount="4" promptText="Observaciones adicionales sobre la compra..." />
+            </VBox>
+            
+            <VBox spacing="8.0" alignment="CENTER_RIGHT" minWidth="200.0">
+               <HBox spacing="10.0">
+                  <Label text="Subtotal:" style="-fx-font-weight: bold;" />
+                  <Label fx:id="lblSubtotal" text="$ 0.00" prefWidth="120.0" style="-fx-alignment: center-right; -fx-font-weight: bold;" />
+               </HBox>
+               <HBox spacing="10.0">
+                  <Label text="IVA Total:" style="-fx-font-weight: bold;" />
+                  <Label fx:id="lblIvaTotal" text="$ 0.00" prefWidth="120.0" style="-fx-alignment: center-right; -fx-font-weight: bold;" />
+               </HBox>
+               <Separator />
+               <HBox spacing="10.0">
+                  <Label text="TOTAL:" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: green;" />
+                  <Label fx:id="lblTotal" text="$ 0.00" prefWidth="120.0" 
+                         style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: green; -fx-alignment: center-right;" />
+               </HBox>
+            </VBox>
+         </HBox>
+      </VBox>
+   </center>
+   
+   <bottom>
+      <Label fx:id="statusLabel" text="Listo para nueva compra" style="-fx-padding: 10px;" />
+   </bottom>
+</BorderPane> -->

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.CalculatorController" spacing="5.0">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   
+   <TextField fx:id="display" editable="false" prefHeight="50.0" style="-fx-alignment: center-right; -fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+   
+   <GridPane hgap="5.0" vgap="5.0">
+      <columnConstraints>
+         <ColumnConstraints hgrow="ALWAYS" />
+         <ColumnConstraints hgrow="ALWAYS" />
+         <ColumnConstraints hgrow="ALWAYS" />
+         <ColumnConstraints hgrow="ALWAYS" />
+      </columnConstraints>
+      
+      <Button onAction="#clearAll" prefHeight="50.0" prefWidth="60.0" text="C" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <Button onAction="#clearEntry" prefHeight="50.0" prefWidth="60.0" text="CE" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <Button onAction="#backspace" prefHeight="50.0" prefWidth="60.0" text="←" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+      <Button onAction="#divide" prefHeight="50.0" prefWidth="60.0" text="÷" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+      
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="7" userData="7" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="8" userData="8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="9" userData="9" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button onAction="#multiply" prefHeight="50.0" prefWidth="60.0" text="×" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="4" userData="4" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="5" userData="5" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="6" userData="6" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button onAction="#subtract" prefHeight="50.0" prefWidth="60.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="1" userData="1" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="2" userData="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="60.0" text="3" userData="3" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Button onAction="#add" prefHeight="50.0" prefWidth="60.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      
+      <Button onAction="#numberPressed" prefHeight="50.0" prefWidth="120.0" text="0" userData="0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+      <Button onAction="#decimal" prefHeight="50.0" prefWidth="60.0" text="." GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Button onAction="#equals" prefHeight="50.0" prefWidth="60.0" text="=" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+   </GridPane>
+</VBox>

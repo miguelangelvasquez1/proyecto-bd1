@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.controller.RegisterController">
+   <children>
+      <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);" maxWidth="450.0" prefWidth="450.0">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                     <children>
+                        <Label text="Registro de Usuario" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        
+                        <VBox spacing="15.0">
+                           <children>
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Nombre completo:" />
+                                    <TextField fx:id="nameField" promptText="Ingresa tu nombre completo" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Email:" />
+                                    <TextField fx:id="emailField" promptText="Ingresa tu email" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Teléfono:" />
+                                    <TextField fx:id="phoneField" promptText="Ingresa tu número de teléfono" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Contraseña:" />
+                                    <PasswordField fx:id="passwordField" promptText="Ingresa tu contraseña" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Confirmar contraseña:" />
+                                    <PasswordField fx:id="confirmPasswordField" promptText="Confirma tu contraseña" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #ddd;" />
+                                 </children>
+                              </VBox>
+                              
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Label text="Rol:" />
+                                    <ComboBox fx:id="roleComboBox" prefWidth="390.0" promptText="Selecciona un rol" style="-fx-background-radius: 8;" />
+                                 </children>
+                              </VBox>
+                              
+                              <Label fx:id="errorLabel" style="-fx-text-fill: red;" visible="false" />
+                              <Label fx:id="successLabel" style="-fx-text-fill: green;" visible="false" />
+                              
+                              <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleRegister" prefWidth="390.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" text="Registrarse">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              
+                              <HBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <Label text="¿Ya tienes cuenta?" />
+                                    <Hyperlink fx:id="loginLink" onAction="#showLogin" text="Inicia sesión aquí" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+   <style>
+      -fx-background-color: linear-gradient(to bottom, #f0f2f5, #e9ecef);
+   </style>
+</AnchorPane>
