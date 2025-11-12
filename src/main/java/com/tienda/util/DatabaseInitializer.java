@@ -87,13 +87,13 @@ public class DatabaseInitializer {
             // Lista de todas las tablas en orden de dependencias
             createRolesTable(conn);
             createUsersTable(conn);
-            createAccessBinnacleTable(conn);
             createClientsTable(conn);
             createProductCategoriesTable(conn);
             createProductsTable(conn);
             createSalesTable(conn);
             createSaleDetailsTable(conn);
             createCreditsTable(conn);
+            createAccessBinnacleTable(conn);
             createQuotasTable(conn);
 
             System.out.println("Todas las tablas verificadas/creadas correctamente.");
@@ -605,13 +605,13 @@ public class DatabaseInitializer {
                 String insertSql = """
                         INSERT INTO sale_details (amount, unit_price, iva_applied, subtotal, sale_id, product_id) VALUES
                         -- Venta 1: TV Samsung
-                        (1, 2700000, 513000, 2700000, 4, 3),
+                        (1, 2700000, 513000, 2700000, 1, 3),
 
                         -- Venta 2: iPhone 13
-                        (1, 4200000, 504000, 4200000, 4, 7),
+                        (1, 4200000, 504000, 4200000, 2, 7),
 
                         -- Venta 3: Tablet Samsung
-                        (1, 1800000, 216000, 1800000, 4, 6),
+                        (1, 1800000, 216000, 1800000, 3, 6),
 
                         -- Venta 4: Laptop HP
                         (1, 2850000, 342000, 2850000, 4, 5),
@@ -676,33 +676,36 @@ public class DatabaseInitializer {
                 ResultSet rs = stmt.executeQuery(checkSql)) {
 
             if (rs.next() && rs.getInt(1) == 0) {
-                String insertSql = """
-                        INSERT INTO credits (initial_quota, amount_financed, months, interest_rate, created_at, state, sale_id) VALUES
-                        -- Crédito 1: iPhone 13 (Venta 2)
-                        (940800, 3763200, 12, 2.5, '2025-09-27', 'VIGENTE', 4),
+                try (Statement insertStatement = conn.createStatement()) {
+                    insertStatement.executeUpdate("SET IDENTITY_INSERT credits ON");
+                    String insertSql = """
+                            INSERT INTO credits (id, initial_quota, amount_financed, months, interest_rate, created_at, state, sale_id) VALUES
+                            -- Crédito 1: iPhone 13 (Venta 2)
+                            (1, 940800, 3763200, 12, 2.5, '2025-09-27', 'VIGENTE', 2),
 
-                        -- Crédito 2: Laptop HP (Venta 4)
-                        (638400, 2553600, 6, 2.0, '2025-09-25', 'VIGENTE', 5),
+                            -- Crédito 2: Laptop HP (Venta 4)
+                            (2, 638400, 2553600, 6, 2.0, '2025-09-25', 'VIGENTE', 4),
 
-                        -- Crédito 3: PS5 (Venta 7)
-                        (785400, 3141600, 12, 2.5, '2025-09-22', 'VIGENTE', 7),
+                            -- Crédito 3: PS5 (Venta 7)
+                            (3, 785400, 3141600, 12, 2.5, '2025-09-22', 'VIGENTE', 7),
 
-                        -- Crédito 4: Tablet Samsung (Venta 10)
-                        (403200, 1612800, 6, 2.0, '2025-09-19', 'VIGENTE', 10),
+                            -- Crédito 4: Tablet Samsung (Venta 10)
+                            (4, 403200, 1612800, 6, 2.0, '2025-09-19', 'VIGENTE', 10),
 
-                        -- Crédito 5: iPhone 13 (Venta 12) - Agosto
-                        (940800, 3763200, 12, 2.5, '2025-08-10', 'VIGENTE', 12),
+                            -- Crédito 5: iPhone 13 (Venta 12) - Agosto
+                            (5, 940800, 3763200, 12, 2.5, '2025-08-10', 'VIGENTE', 12),
 
-                        -- Crédito 6: Laptop HP (Venta 14) - Julio
-                        (638400, 2553600, 6, 2.0, '2025-07-20', 'VIGENTE', 14),
+                            -- Crédito 6: Laptop HP (Venta 14) - Julio
+                            (6, 638400, 2553600, 6, 2.0, '2025-07-20', 'VIGENTE', 14),
 
-                        -- Crédito 7: PS5 (Venta 17) - Junio
-                        (785400, 3141600, 12, 2.5, '2025-06-18', 'VIGENTE', 17)
-                        """;
+                            -- Crédito 7: PS5 (Venta 17) - Junio
+                            (7, 785400, 3141600, 12, 2.5, '2025-06-18', 'VIGENTE', 17)
+                            """;
 
-                try (Statement insertStmt = conn.createStatement()) {
-                    insertStmt.executeUpdate(insertSql);
-                    System.out.println("Créditos insertados.");
+                    try (Statement insertStmt = conn.createStatement()) {
+                        insertStmt.executeUpdate(insertSql);
+                        System.out.println("Créditos insertados.");
+                    }
                 }
             }
         }
@@ -720,62 +723,62 @@ public class DatabaseInitializer {
                 String insertSql = """
                         INSERT INTO quotas (quota_number, expiration_date, quota_value, payed_value, payed_at, state, credit_id) VALUES
                         -- Cuotas para Crédito 1 (12 meses - iPhone)
-                        (1, '2025-10-27', 313600, 313600, '2025-10-25', 'PAGADA', 6),
-                        (2, '2025-11-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (3, '2025-12-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (4, '2026-01-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (5, '2026-02-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (6, '2026-03-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (7, '2026-04-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (8, '2026-05-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (9, '2026-06-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (10, '2026-07-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (11, '2026-08-27', 313600, NULL, NULL, 'PENDIENTE', 6),
-                        (12, '2026-09-27', 313600, NULL, NULL, 'PENDIENTE', 6),
+                        (1, '2025-10-27', 313600, 313600, '2025-10-25', 'PAGADA', 1),
+                        (2, '2025-11-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (3, '2025-12-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (4, '2026-01-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (5, '2026-02-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (6, '2026-03-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (7, '2026-04-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (8, '2026-05-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (9, '2026-06-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (10, '2026-07-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (11, '2026-08-27', 313600, NULL, NULL, 'PENDIENTE', 1),
+                        (12, '2026-09-27', 313600, NULL, NULL, 'PENDIENTE', 1),
 
                         -- Cuotas para Crédito 2 (6 meses - Laptop)
-                        (1, '2025-10-25', 425600, 425600, '2025-10-23', 'PAGADA', 7),
-                        (2, '2025-11-25', 425600, NULL, NULL, 'PENDIENTE', 7),
-                        (3, '2025-12-25', 425600, NULL, NULL, 'PENDIENTE', 7),
-                        (4, '2026-01-25', 425600, NULL, NULL, 'PENDIENTE', 7),
-                        (5, '2026-02-25', 425600, NULL, NULL, 'PENDIENTE', 7),
-                        (6, '2026-03-25', 425600, NULL, NULL, 'PENDIENTE', 7),
+                        (1, '2025-10-25', 425600, 425600, '2025-10-23', 'PAGADA', 2),
+                        (2, '2025-11-25', 425600, NULL, NULL, 'PENDIENTE', 2),
+                        (3, '2025-12-25', 425600, NULL, NULL, 'PENDIENTE', 2),
+                        (4, '2026-01-25', 425600, NULL, NULL, 'PENDIENTE', 2),
+                        (5, '2026-02-25', 425600, NULL, NULL, 'PENDIENTE', 2),
+                        (6, '2026-03-25', 425600, NULL, NULL, 'PENDIENTE', 2),
 
                         -- Cuotas para Crédito 3 (12 meses - PS5)
-                        (1, '2025-10-22', 261800, 261800, '2025-10-20', 'PAGADA', 8),
-                        (2, '2025-11-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (3, '2025-12-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (4, '2026-01-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (5, '2026-02-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (6, '2026-03-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (7, '2026-04-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (8, '2026-05-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (9, '2026-06-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (10, '2026-07-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (11, '2026-08-22', 261800, NULL, NULL, 'PENDIENTE', 8),
-                        (12, '2026-09-22', 261800, NULL, NULL, 'PENDIENTE', 8),
+                        (1, '2025-10-22', 261800, 261800, '2025-10-20', 'PAGADA', 3),
+                        (2, '2025-11-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (3, '2025-12-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (4, '2026-01-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (5, '2026-02-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (6, '2026-03-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (7, '2026-04-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (8, '2026-05-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (9, '2026-06-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (10, '2026-07-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (11, '2026-08-22', 261800, NULL, NULL, 'PENDIENTE', 3),
+                        (12, '2026-09-22', 261800, NULL, NULL, 'PENDIENTE', 3),
 
                         -- Cuotas para Crédito 4 (6 meses - Tablet)
-                        (1, '2025-10-19', 268800, 268800, '2025-10-18', 'PAGADA', 9),
-                        (2, '2025-11-19', 268800, NULL, NULL, 'PENDIENTE', 9),
-                        (3, '2025-12-19', 268800, NULL, NULL, 'PENDIENTE', 9),
-                        (4, '2026-01-19', 268800, NULL, NULL, 'PENDIENTE', 9),
-                        (5, '2026-02-19', 268800, NULL, NULL, 'PENDIENTE', 9),
-                        (6, '2026-03-19', 268800, NULL, NULL, 'PENDIENTE', 9),
+                        (1, '2025-10-19', 268800, 268800, '2025-10-18', 'PAGADA', 4),
+                        (2, '2025-11-19', 268800, NULL, NULL, 'PENDIENTE', 4),
+                        (3, '2025-12-19', 268800, NULL, NULL, 'PENDIENTE', 4),
+                        (4, '2026-01-19', 268800, NULL, NULL, 'PENDIENTE', 4),
+                        (5, '2026-02-19', 268800, NULL, NULL, 'PENDIENTE', 4),
+                        (6, '2026-03-19', 268800, NULL, NULL, 'PENDIENTE', 4),
 
                         -- Cuotas para Crédito 5 (12 meses - iPhone Agosto) - algunas pagadas
-                        (1, '2025-09-10', 313600, 313600, '2025-09-08', 'PAGADA', 10),
-                        (2, '2025-10-10', 313600, NULL, NULL, 'VENCIDA', 10),
-                        (3, '2025-11-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (4, '2025-12-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (5, '2026-01-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (6, '2026-02-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (7, '2026-03-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (8, '2026-04-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (9, '2026-05-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (10, '2026-06-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (11, '2026-07-10', 313600, NULL, NULL, 'PENDIENTE', 10),
-                        (12, '2026-08-10', 313600, NULL, NULL, 'PENDIENTE', 10)
+                        (1, '2025-09-10', 313600, 313600, '2025-09-08', 'PAGADA', 5),
+                        (2, '2025-10-10', 313600, NULL, NULL, 'VENCIDA', 5),
+                        (3, '2025-11-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (4, '2025-12-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (5, '2026-01-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (6, '2026-02-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (7, '2026-03-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (8, '2026-04-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (9, '2026-05-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (10, '2026-06-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (11, '2026-07-10', 313600, NULL, NULL, 'PENDIENTE', 5),
+                        (12, '2026-08-10', 313600, NULL, NULL, 'PENDIENTE', 5)
                         """;
 
                 try (Statement insertStmt = conn.createStatement()) {
