@@ -46,7 +46,7 @@ public class TopController {
     // Métodos para Reportes
     @FXML
     private void openIvaReport() {
-        openWindow("/views/IvaReport.fxml", "Reporte IVA DIAN");
+        openWindow("/views/IVASaleReport.fxml", "Reporte IVA DIAN");
     }
     
     @FXML
@@ -57,22 +57,12 @@ public class TopController {
     // Métodos para Consultas
     @FXML
     private void openSalesByUser() {
-        openWindow("/views/SalesByUserQuery.fxml", "Ventas por Usuario");
+        openWindow("/views/UserSales.fxml", "Ventas por Usuario");
     }
     
     @FXML
-    private void openCreditAnalysis() {
-        openWindow("/views/CreditAnalysisQuery.fxml", "Análisis de Créditos");
-    }
-    
-    @FXML
-    private void openClientPurchases() {
-        openWindow("/views/ClientPurchasesQuery.fxml", "Compras por Cliente");
-    }
-    
-    @FXML
-    private void openMonthlyTrends() {
-        openWindow("/views/MonthlyTrendsQuery.fxml", "Tendencias Mensuales");
+    private void openInventory() {
+        openWindow("/views/Inventory.fxml", "Inventario de productos");
     }
     
     // Métodos para Utilidades
@@ -83,7 +73,7 @@ public class TopController {
     
     @FXML
     private void openCalendar() {
-        openWindow("/views/CalendarUtil.fxml", "Calendario");
+        openWindow("/views/Calendar.fxml", "Calendario");
     }
     
     @FXML

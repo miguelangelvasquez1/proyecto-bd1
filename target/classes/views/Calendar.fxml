@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tienda.controller.CalendarController"
+            prefHeight="700.0" prefWidth="900.0"
+            styleClass="calendar-container">
+
+    <!-- Header del Calendario -->
+    <top>
+        <VBox spacing="15" styleClass="calendar-header">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+             <HBox alignment="CENTER_LEFT">
+                <Button fx:id="btnBack" text="Volver" 
+                        onAction="#handleBack" 
+                        styleClass="back-button"/>
+            </HBox>
+            
+            <!-- Reloj Digital -->
+            <HBox alignment="CENTER" spacing="10">
+                <Label fx:id="lblClock" text="00:00:00" styleClass="clock-label">
+                    <font>
+                        <Font name="System Bold" size="32"/>
+                    </font>
+                </Label>
+            </HBox>
+            
+            <Separator/>
+            
+            <!-- Controles de navegación -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="btnPreviousYear" text="◄◄" 
+                        onAction="#handlePreviousYear" 
+                        styleClass="nav-button-small"/>
+                
+                <Button fx:id="btnPreviousMonth" text="◄" 
+                        onAction="#handlePreviousMonth" 
+                        styleClass="nav-button"/>
+                
+                <Label fx:id="lblMonthYear" text="Noviembre 2025" styleClass="month-label">
+                    <font>
+                        <Font name="System Bold" size="20"/>
+                    </font>
+                </Label>
+                
+                <Button fx:id="btnNextMonth" text="►" 
+                        onAction="#handleNextMonth" 
+                        styleClass="nav-button"/>
+                
+                <Button fx:id="btnNextYear" text="►►" 
+                        onAction="#handleNextYear" 
+                        styleClass="nav-button-small"/>
+                
+                <Region HBox.hgrow="ALWAYS"/>
+                
+                <Button fx:id="btnToday" text="Hoy" 
+                        onAction="#handleToday" 
+                        styleClass="today-button"/>
+            </HBox>
+            
+            <!-- Fecha seleccionada -->
+            <HBox alignment="CENTER">
+                <Label fx:id="lblSelectedDate" text="Fecha seleccionada: --/--/----" 
+                       styleClass="selected-date-label">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Cuerpo del Calendario -->
+    <center>
+        <VBox spacing="0" styleClass="calendar-body">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20"/>
+            </padding>
+            
+            <!-- Días de la semana -->
+            <GridPane fx:id="weekDaysGrid" styleClass="week-days-grid">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                </columnConstraints>
+            </GridPane>
+            
+            <!-- Grid de días del mes -->
+            <GridPane fx:id="daysGrid" styleClass="days-grid" VBox.vgrow="ALWAYS">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                    <ColumnConstraints percentWidth="14.28"/>
+                </columnConstraints>
+            </GridPane>
+        </VBox>
+    </center>
+
+    <!-- Footer con información adicional -->
+    <bottom>
+        <HBox spacing="20" alignment="CENTER" styleClass="footer">
+            <padding>
+                <Insets top="15" right="20" bottom="15" left="20"/>
+            </padding>
+            
+            <Label fx:id="lblDayOfYear" text="Día del año: 315"/>
+            <Separator orientation="VERTICAL"/>
+            <Label fx:id="lblWeekOfYear" text="Semana: 45"/>
+            <Separator orientation="VERTICAL"/>
+            <Label fx:id="lblDaysInMonth" text="Días en este mes: 30"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

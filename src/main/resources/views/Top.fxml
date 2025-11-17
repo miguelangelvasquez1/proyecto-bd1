@@ -20,9 +20,7 @@
             </Menu>
             <Menu text="Consultas">
                <MenuItem onAction="#openSalesByUser" text="Ventas por Usuario" />
-               <MenuItem onAction="#openCreditAnalysis" text="Análisis de Créditos" />
-               <MenuItem onAction="#openClientPurchases" text="Compras por Cliente" />
-               <MenuItem onAction="#openMonthlyTrends" text="Tendencias Mensuales" />
+               <MenuItem onAction="#openInventory" text="Inventario de productos" />
             </Menu>
             <Menu text="Utilidades">
                <MenuItem onAction="#openCalculator" text="Calculadora" />

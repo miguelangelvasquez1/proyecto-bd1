@@ -8,7 +8,7 @@ import com.tienda.util.DatabaseInitializer;
 import com.tienda.util.SceneManager;
 import com.tienda.util.SessionManager;
 
-public class TiendaApplication extends Application {
+public class App extends Application {
     
     private static DatabaseInitializer dbInitializer = new DatabaseInitializer();
 

@@ -2,6 +2,7 @@ package com.tienda.dao;
 
 import com.tienda.model.Product;
 import com.tienda.model.ProductCategory;
+import com.tienda.model.dtos.InventoryItemDTO;
 import com.tienda.util.DatabaseConnection;
 
 import java.sql.*;
@@ -233,40 +234,44 @@ public class ProductDAO {
     // }
 
     // Consulta específica: Inventario por categoría con costo
-    public List<Object[]> getInventoryByCategoryWithCost() {
-        List<Object[]> inventory = new ArrayList<>();
+    public List<InventoryItemDTO> getInventoryByCategory (){
+        List<InventoryItemDTO> inventory = new ArrayList<>();
         String sql = """
-                SELECT
-                    pc.name as categoria,
-                    p.name as producto,
-                    p.stock,
-                    p.acquisition_value as costo_unitario,
-                    (p.stock * p.acquisition_value) as costo_total
-                FROM products p
-                INNER JOIN product_categories pc ON p.category_id = pc.id
-                ORDER BY pc.name, p.name
-                """;
-
-        try (Connection conn = dbConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+                        SELECT 
+                        p.id, 
+                        p.name, 
+                        p.acquisition_value AS cost,
+                        p.sale_value AS price, 
+                        p.stock, 
+                        pc.name AS category
+                        FROM products p
+                        JOIN product_categories pc ON p.category_id = pc.id
+                        ORDER BY pc.name ASC, p.name ASC
+                     """;
+        
+        try (Connection conn = dbConnection.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Object[] row = {
-                        rs.getString("categoria"),
-                        rs.getString("producto"),
-                        rs.getInt("stock"),
-                        rs.getDouble("costo_unitario"),
-                        rs.getDouble("costo_total")
-                };
-                inventory.add(row);
+                InventoryItemDTO item = new InventoryItemDTO();
+                item.setId(rs.getInt("id"));
+                item.setName(rs.getString("name"));
+                item.setCost(rs.getDouble("cost"));
+                item.setPrice(rs.getDouble("price"));
+                item.setStock(rs.getInt("stock"));
+                item.setCategory(rs.getString("category"));
+                inventory.add(item);
             }
 
         } catch (SQLException e) {
-            System.err.println("Error obteniendo inventario por categoría: " + e.getMessage());
+            System.err.println("Error obteniendo inventario de productos: " + e.getMessage());
+            e.printStackTrace();
         }
+        
         return inventory;
     }
+
 
     // private Product mapResultSetToProduct(ResultSet rs) throws SQLException {
     //     Product product = new Product();

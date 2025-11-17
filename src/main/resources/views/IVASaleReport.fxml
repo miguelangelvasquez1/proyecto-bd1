@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tienda.controller.IVASaleReportController">
+
+    <!-- TÍTULO -->
+    <top>
+        <Label text="Reporte de Ventas - IVA" 
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 15;" />
+    </top>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+
+            <!-- FILTROS -->
+            <HBox spacing="15">
+                <Label text="Fecha Inicio:"/>
+                <DatePicker fx:id="fromDatePicker"/>
+
+                <Label text="Fecha Fin:"/>
+                <DatePicker fx:id="toDatePicker"/>
+
+                <Button text="Buscar" fx:id="btnSearch"/>
+                <Button text="Generar PDF" fx:id="btnPdf"/>
+            </HBox>
+
+            <!-- TABLA -->
+            <TableView fx:id="reportTable" prefHeight="300">
+
+                <columns>
+                    <TableColumn fx:id="colSaleId" text="ID Venta" prefWidth="80"/>
+                    <TableColumn fx:id="colProduct" text="Producto" prefWidth="160"/>
+                    <TableColumn fx:id="colQty" text="Cantidad" prefWidth="80"/>
+                    <TableColumn fx:id="colDate" text="Fecha" prefWidth="120"/>
+                    <TableColumn fx:id="colType" text="Tipo" prefWidth="120"/>
+                    <TableColumn fx:id="colSubtotal" text="Subtotal" prefWidth="120"/>
+                    <TableColumn fx:id="colIVA" text="IVA" prefWidth="120"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="120"/>
+                    <TableColumn fx:id="colClient" text="Cliente" prefWidth="150"/>
+                </columns>
+
+            </TableView>
+
+            <!-- PIE DE TOTALES -->
+            <HBox spacing="25" alignment="CENTER_LEFT">
+                <Label text="Subtotal:"/>
+                <Label fx:id="lblSubtotal" style="-fx-font-weight: bold;"/>
+
+                <Label text="IVA Total:"/>
+                <Label fx:id="lblIva" style="-fx-font-weight: bold;"/>
+
+                <Label text="Total General:"/>
+                <Label fx:id="lblTotal" style="-fx-font-weight: bold;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
