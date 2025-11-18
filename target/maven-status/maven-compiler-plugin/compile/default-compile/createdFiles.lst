@@ -11,6 +11,7 @@ com\tienda\controller\ProductManagementController$4.class
 com\tienda\model\PurchaseDetails.class
 com\tienda\dao\CreditDAO.class
 com\tienda\util\SessionManager.class
+com\tienda\controller\DefaulterReportController.class
 com\tienda\controller\ClientController.class
 com\tienda\controller\UserManagementController.class
 com\tienda\controller\UserSalesController.class
@@ -26,6 +27,7 @@ com\tienda\App.class
 com\tienda\model\dtos\DefaulterClientDTO.class
 com\tienda\controller\ProductFormController$1.class
 com\tienda\controller\SalesHistoryController.class
+com\tienda\controller\CreatePurchaseController.class
 com\tienda\model\dtos\UserSalesDTO.class
 com\tienda\controller\UserManagementController$1.class
 com\tienda\dao\QuotaDAO.class
@@ -54,6 +56,7 @@ com\tienda\controller\CalendarController.class
 com\tienda\util\DefaulterReportGenerator.class
 com\tienda\controller\SalesHistoryController$1.class
 com\tienda\controller\LoginController.class
+com\tienda\util\InvoiceGenerator.class
 com\tienda\dao\AccessBinnacleDAO.class
 com\tienda\model\ProductCategory.class
 com\tienda\model\Credit.class

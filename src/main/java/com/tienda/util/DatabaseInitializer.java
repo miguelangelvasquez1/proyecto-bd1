@@ -95,6 +95,7 @@ public class DatabaseInitializer {
             createCreditsTable(conn);
             createAccessBinnacleTable(conn);
             createQuotasTable(conn);
+            createCreditPaymentsTable(conn);
 
             System.out.println("Todas las tablas verificadas/creadas correctamente.");
 
@@ -134,6 +135,28 @@ public class DatabaseInitializer {
             }
         } else {
             System.out.println("Tabla 'roles' ya existe.");
+        }
+    }
+
+    private void createCreditPaymentsTable(Connection conn) throws SQLException {
+        if (!tableExists(conn, "credit_payments")) {
+            System.out.println("Creando tabla: pagos de creditos");
+            String sql = """
+                    CREATE TABLE credit_payments (
+                        id INT IDENTITY PRIMARY KEY,
+                        credit_id INT NOT NULL,
+                        payment_number INT NOT NULL,
+                        payment_date DATE NOT NULL,
+
+                        FOREIGN KEY (credit_id) REFERENCES credits(id)
+                    )
+                    """;
+            try (Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate(sql);
+                System.out.println("Tabla 'credit_payments' creada exitosamente.");
+            }
+        } else {
+            System.out.println("Tabla 'credit_payments' ya existe.");
         }
     }
 
@@ -406,6 +429,7 @@ public class DatabaseInitializer {
             insertPurchaseDetails(conn);
             insertCredits(conn);
             insertQuotas(conn);
+            insertCreditPayments(conn);
 
             System.out.println("Datos iniciales insertados correctamente.");
 
@@ -437,6 +461,28 @@ public class DatabaseInitializer {
                     System.out.println("Roles iniciales insertados.");
                 }
             }
+        }
+    }
+
+    private void insertCreditPayments(Connection conn) throws SQLException{
+        String checkSql = "SELECT COUNT(*) FROM credit_payments";
+        try(Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(checkSql)) {
+            
+            if (rs.next() && rs.getInt(1) == 0) {
+                String insertSql = """
+                        INSERT INTO credit_payments (credit_id, payment_number, payment_date) VALUES 
+                        (2, 1, '2025-10-27'),
+                        (7, 1, '2025-08-22'),
+                        (7, 2, '2025-09-22')
+                        """;
+
+                try (Statement insertStmt = conn.createStatement()) {
+                    insertStmt.executeUpdate(insertSql);
+                    System.out.println("Pagos de creditos iniciales insertados.");
+                }
+            }
+
         }
     }
 

@@ -8,12 +8,15 @@ C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\dao\ProductDAO.j
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\model\SaleItem.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\util\DatabaseInitializer.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\controller\ProductFormController.java
+C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\controller\CreatePurchaseController.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\util\DatabaseConnection.java
+C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\util\InvoiceGenerator.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\dao\QuotaDAO.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\model\PurchaseDetails.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\controller\ProductManagementController.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\util\IVAReportGenerator.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\dao\PurchaseDAO.java
+C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\controller\DefaulterReportController.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\model\dtos\UserSalesDTO.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\dao\ReportDAO.java
 C:\Users\Juan Pablo\Music\proyecto-bd1\src\main\java\com\tienda\util\DefaulterReportGenerator.java

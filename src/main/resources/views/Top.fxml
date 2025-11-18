@@ -11,8 +11,8 @@
                <MenuItem onAction="#openUsers" text="Usuarios" />
             </Menu>
             <Menu text="Transacciones">
+               <MenuItem onAction="#createPurchase" text="Crear Compra"/>
                <MenuItem onAction="#openSales" text="Ventas" />
-               <MenuItem onAction="#openCredits" text="Créditos" />
             </Menu>
             <Menu text="Reportes">
                <MenuItem onAction="#openIvaReport" text="Reporte IVA DIAN" />

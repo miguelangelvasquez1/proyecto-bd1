@@ -21,9 +21,9 @@ public class ReportDAO {
     public List<SaleReportDTO> getSalesForIVAReport(Date startDate, Date endDate) {
         List<SaleReportDTO> sales = new ArrayList<>();
         String sql = """
-                SELECT s.id, p.name AS product, sd.amount AS quantity, s.date, 
+                SELECT s.id, p.name AS product, sd.amount AS quantity, s.date,
                        s.sale_type, s.subtotal, s.iva_total, s.total, c.name AS client
-                FROM sale_details sd 
+                FROM sale_details sd
                 INNER JOIN sales s ON s.id = sd.sale_id
                 INNER JOIN products p ON p.id = sd.product_id
                 INNER JOIN clients c ON s.client_id = c.id
@@ -32,7 +32,7 @@ public class ReportDAO {
                 """;
 
         try (Connection conn = dbConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDate(1, startDate);
             stmt.setDate(2, endDate);
@@ -65,13 +65,13 @@ public class ReportDAO {
      */
     public double getTotalIVA(Date startDate, Date endDate) {
         String sql = """
-                SELECT SUM(s.iva_total) AS TaxAmount 
+                SELECT SUM(s.iva_total) AS TaxAmount
                 FROM sales s
                 WHERE s.date BETWEEN ? AND ?
                 """;
 
         try (Connection conn = dbConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDate(1, startDate);
             stmt.setDate(2, endDate);
@@ -89,50 +89,47 @@ public class ReportDAO {
         return 0.0;
     }
 
-    /**
-     * Obtiene clientes morosos (con cuotas vencidas)
-     */
     public List<DefaulterClientDTO> getDefaulterClients() {
-        List<DefaulterClientDTO> defaulters = new ArrayList<>();
+        List<DefaulterClientDTO> list = new ArrayList<>();
+
         String sql = """
-                SELECT 
-                    c.name AS clientName,
-                    c.document_number AS documentNumber,
-                    c.phone_number AS phoneNumber,
-                    c.email,
-                    cr.id AS creditId,
-                    cr.amount_financed AS totalDebt,
-                    COUNT(q.id) AS overdueQuotas,
-                    MAX(q.payed_at) AS lastPaymentDate,
-                    DATEDIFF(DAY, MIN(q.expiration_date), GETDATE()) AS daysPastDue
-                FROM clients c
-                INNER JOIN sales s ON c.id = s.client_id
-                INNER JOIN credits cr ON s.id = cr.sale_id
-                INNER JOIN quotas q ON cr.id = q.credit_id
-                WHERE q.state IN ('VENCIDA', 'PENDIENTE')
-                  AND q.expiration_date < CAST(GETDATE() AS DATE)
-                  AND cr.state = 'VIGENTE'
-                GROUP BY c.name, c.document_number, c.phone_number, c.email, cr.id, cr.amount_financed
-                HAVING COUNT(q.id) > 0
-                ORDER BY daysPastDue DESC
+                    SELECT
+                        c.name AS client_name,
+                        c.document_number,
+                        c.phone_number,
+                        c.email,
+                        cr.id AS credit_id,
+                        SUM(q.quota_value - ISNULL(q.payed_value, 0)) AS total_debt,
+                        COUNT(q.id) AS overdue_quotas,
+                        MAX(q.payed_at) AS last_payment_date,
+                        DATEDIFF(DAY, MIN(q.expiration_date), GETDATE()) AS days_past_due
+                    FROM clients c
+                    JOIN sales s ON s.client_id = c.id
+                    JOIN credits cr ON cr.sale_id = s.id
+                    JOIN quotas q ON q.credit_id = cr.id
+                    WHERE q.state = 'VENCIDA'
+                    GROUP BY
+                        c.name, c.document_number, c.phone_number, c.email, cr.id
+                    HAVING COUNT(q.id) > 0
+                    ORDER BY overdue_quotas DESC
                 """;
 
         try (Connection conn = dbConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 DefaulterClientDTO dto = new DefaulterClientDTO();
-                dto.setClientName(rs.getString("clientName"));
-                dto.setDocumentNumber(rs.getString("documentNumber"));
-                dto.setPhoneNumber(rs.getString("phoneNumber"));
+                dto.setClientName(rs.getString("client_name"));
+                dto.setDocumentNumber(rs.getString("document_number"));
+                dto.setPhoneNumber(rs.getString("phone_number")); // ← CORREGIDO
                 dto.setEmail(rs.getString("email"));
-                dto.setCreditId(rs.getInt("creditId"));
-                dto.setTotalDebt(rs.getDouble("totalDebt"));
-                dto.setOverdueQuotas(rs.getInt("overdueQuotas"));
-                dto.setLastPaymentDate(rs.getDate("lastPaymentDate"));
-                dto.setDaysPastDue(rs.getInt("daysPastDue"));
-                defaulters.add(dto);
+                dto.setCreditId(rs.getInt("credit_id"));
+                dto.setTotalDebt(rs.getDouble("total_debt"));
+                dto.setOverdueQuotas(rs.getInt("overdue_quotas"));
+                dto.setLastPaymentDate(rs.getDate("last_payment_date"));
+                dto.setDaysPastDue(rs.getInt("days_past_due"));
+                list.add(dto);
             }
 
         } catch (SQLException e) {
@@ -140,6 +137,7 @@ public class ReportDAO {
             e.printStackTrace();
         }
 
-        return defaulters;
+        return list;
     }
+
 }

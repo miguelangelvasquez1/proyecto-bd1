@@ -24,14 +24,13 @@ public class DefaulterReportGenerator {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public static File generateReport(List<DefaulterClientDTO> defaulters) throws Exception {
-        
+
         String userHome = System.getProperty("user.home");
         String downloadsPath = userHome + File.separator + "Downloads";
         String fileName = "Reporte_Morosos_" + System.currentTimeMillis() + ".pdf";
         String filePath = downloadsPath + File.separator + fileName;
-        
-        File pdfFile = new File(filePath);
-        PdfWriter writer = new PdfWriter(pdfFile);
+
+        PdfWriter writer = new PdfWriter(filePath);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
@@ -40,67 +39,64 @@ public class DefaulterReportGenerator {
                 .setFontSize(20)
                 .setBold()
                 .setTextAlignment(TextAlignment.CENTER)
-                .setMarginBottom(20);
+                .setMarginBottom(15);
         document.add(title);
 
         // Resumen
         Paragraph summary = new Paragraph("Total clientes morosos: " + defaulters.size())
-                .setFontSize(14)
+                .setFontSize(13)
                 .setBold()
                 .setBackgroundColor(ColorConstants.LIGHT_GRAY)
-                .setPadding(10)
-                .setTextAlignment(TextAlignment.CENTER)
-                .setMarginBottom(20);
+                .setPadding(8)
+                .setMarginBottom(20)
+                .setTextAlignment(TextAlignment.CENTER);
         document.add(summary);
 
         // Tabla
-        float[] columnWidths = {3, 2, 2, 3, 2, 2, 2, 2};
-        Table table = new Table(UnitValue.createPercentArray(columnWidths));
+        float[] columns = {3, 2, 2, 3, 2, 2, 2, 2};
+        Table table = new Table(UnitValue.createPercentArray(columns));
         table.setWidth(UnitValue.createPercentValue(100));
 
         // Headers
-        addTableHeader(table, "Cliente");
-        addTableHeader(table, "Documento");
-        addTableHeader(table, "Teléfono");
-        addTableHeader(table, "Email");
-        addTableHeader(table, "Deuda Total");
-        addTableHeader(table, "Cuotas Vencidas");
-        addTableHeader(table, "Último Pago");
-        addTableHeader(table, "Días Mora");
+        addHeader(table, "Cliente");
+        addHeader(table, "Documento");
+        addHeader(table, "Teléfono");
+        addHeader(table, "Email");
+        addHeader(table, "Deuda Total");
+        addHeader(table, "Cuotas Vencidas");
+        addHeader(table, "Último Pago");
+        addHeader(table, "Días Mora");
 
         // Datos
-        for (DefaulterClientDTO client : defaulters) {
-            table.addCell(new Cell().add(new Paragraph(client.getClientName())));
-            table.addCell(new Cell().add(new Paragraph(client.getDocumentNumber())));
-            table.addCell(new Cell().add(new Paragraph(client.getPhoneNumber())));
-            table.addCell(new Cell().add(new Paragraph(client.getEmail() != null ? client.getEmail() : "N/A")));
-            table.addCell(new Cell().add(new Paragraph(currencyFormat.format(client.getTotalDebt()))));
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(client.getOverdueQuotas()))));
-            table.addCell(new Cell().add(new Paragraph(
-                    client.getLastPaymentDate() != null ? dateFormat.format(client.getLastPaymentDate()) : "N/A"
-            )));
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(client.getDaysPastDue()))));
+        for (DefaulterClientDTO c : defaulters) {
+            table.addCell(c.getClientName());
+            table.addCell(c.getDocumentNumber());
+            table.addCell(c.getPhoneNumber());
+            table.addCell(c.getEmail() == null ? "N/A" : c.getEmail());
+            table.addCell(currencyFormat.format(c.getTotalDebt()));
+            table.addCell(String.valueOf(c.getOverdueQuotas()));
+            table.addCell(c.getLastPaymentDate() != null ? dateFormat.format(c.getLastPaymentDate()) : "N/A");
+            table.addCell(String.valueOf(c.getDaysPastDue()));
         }
 
         document.add(table);
 
-        // Footer
-        Paragraph footer = new Paragraph("Generado el: " + dateFormat.format(new Date()))
+        document.add(new Paragraph("Generado el: " + dateFormat.format(new Date()))
                 .setFontSize(10)
-                .setTextAlignment(TextAlignment.RIGHT)
-                .setMarginTop(20);
-        document.add(footer);
+                .setMarginTop(20)
+                .setTextAlignment(TextAlignment.RIGHT));
 
         document.close();
-        
-        return pdfFile;
+
+        return new File(filePath);
     }
 
-    private static void addTableHeader(Table table, String headerText) {
-        Cell header = new Cell()
-                .add(new Paragraph(headerText).setBold().setFontSize(10))
-                .setBackgroundColor(ColorConstants.GRAY)
-                .setTextAlignment(TextAlignment.CENTER);
-        table.addHeaderCell(header);
+    private static void addHeader(Table table, String title) {
+        table.addHeaderCell(
+                new Cell()
+                        .add(new Paragraph(title).setBold().setFontSize(10))
+                        .setBackgroundColor(ColorConstants.GRAY)
+                        .setTextAlignment(TextAlignment.CENTER)
+        );
     }
 }
